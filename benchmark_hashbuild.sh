@@ -10,7 +10,13 @@ for numWarehouses in ${Warehouse_numbers[@]}; do
 	mkdir ../benchmarks_hyrise/logs/${Benchmark_name}/w${numWarehouses}i${numItems}
 
 	# generate dataset
-	../benchmarks_hyrise/generate_dataset.sh ${numItems} ${numWarehouses}
+	if [ -f ../benchmars_hyrise/stock_w${numWarehouses}i${numItems}.tbl ]
+	then
+	    mv ../benchmars_hyrise/stock_w${numWarehouses}i${numItems}.tbl ../benchmars_hyrise/stock.tbl
+	else
+	    ../benchmarks_hyrise/generate_dataset.sh ${numItems} ${numWarehouses}
+	fi
+	
 	# start server
 	../benchmarks_hyrise/run_server.sh &
 	SERVER_ID=$!
@@ -27,4 +33,5 @@ for numWarehouses in ${Warehouse_numbers[@]}; do
 	# kill old instance
 	kill -9 ${SERVER_ID}
 	killall hyrise-server_release
+	mv ../benchmars_hyrise/stock.tbl ../benchmars_hyrise/stock_w${numWarehouses}i${numItems}.tbl
 done
