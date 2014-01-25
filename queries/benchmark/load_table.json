@@ -1,0 +1,13 @@
+{
+    "operators": {
+        "0": {
+            "type": "TableLoad",
+            "table": "stock",
+            "filename": "../../benchmarks_hyrise/stock.tbl"
+        },
+	"1": {
+	    "type": "NoOp"
+	}
+    },
+    "edges": [["0", "1"]]
+}

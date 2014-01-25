@@ -1,0 +1,28 @@
+{
+    "operators": {
+        "0": {
+            "type": "TableLoad",
+            "table": "stock",
+            "filename": "../../benchmarks_hyrise/stock.tbl"
+        },
+	"1": {
+   		"type": "StartProfiling"
+	},
+        "2": {
+            "type": "HashBuild",
+            "fields": ["S_W_ID"],
+	    "key": "groupby"
+        },
+        "3": {
+            "type": "GroupByScan",
+            "fields": ["S_W_ID"],
+	    "functions": [
+                {"type": 2, /*AVG*/ "field": "S_QUANTITY"}
+            ]
+        },
+	"4": {
+	    "type": "StopProfiling"
+	}
+    },
+    "edges" : [["0", "1"], ["1", "2"], ["1", "3"],["2", "3"],["3", "4"]]
+}
