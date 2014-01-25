@@ -2,7 +2,7 @@ cd ../hyrise
 Benchmark_name='hashbuild'
 rm --recursive -f ../benchmarks_hyrise/logs/${Benchmark_name}
 mkdir ../benchmarks_hyrise/logs ../benchmarks_hyrise/logs/${Benchmark_name}
-Benchmarks=('hashbuild' 'hashbuild_nonshared_2cores' 'hashbuild_nonshared_4cores' 'hashbuild_shared_2cores' 'hashbuild_shared_4cores');
+Benchmarks=('hashbuild' 'hashbuild_nonshared_4cores' 'hashbuild_nonshared_8cores' 'hashbuild_nonshared_16cores' 'hashbuild_nonshared_32cores' 'hashbuild_shared_4cores' 'hashbuild_shared_8cores' 'hashbuild_shared_16cores' 'hashbuild_shared_32cores');
 Warehouse_numbers=(5000 10000 25000 50000 100000 200000);
 rowCount=30000000;
 for numWarehouses in ${Warehouse_numbers[@]}; do
