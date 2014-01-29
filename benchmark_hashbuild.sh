@@ -2,17 +2,20 @@ cd ../hyrise
 Benchmark_name='hashbuild'
 rm --recursive -f ../benchmarks_hyrise/logs/${Benchmark_name}
 mkdir ../benchmarks_hyrise/logs ../benchmarks_hyrise/logs/${Benchmark_name}
-Benchmarks=('hashbuild' 'hashbuild_nonshared_8cores' 'hashbuild_nonshared_16cores' 'hashbuild_nonshared_32cores' 'hashbuild_shared_8cores' 'hashbuild_shared_16cores' 'hashbuild_shared_32cores');
-Warehouse_numbers=(5000 10000 25000 50000 100000 200000);
+Benchmarks=(	#'hashbuild' 
+		#'hashbuild_nonshared_4cores' 'hashbuild_nonshared_8cores' 'hashbuild_nonshared_12cores' 
+		'hashbuild_shared_4cores' 'hashbuild_shared_8cores' 'hashbuild_shared_12cores'
+);
+Warehouse_numbers=(10000 25000 50000 100000 250000 500000 1000000);
 rowCount=50000000;
 for numWarehouses in ${Warehouse_numbers[@]}; do
 	let numItems=${rowCount}/${numWarehouses}
 	mkdir ../benchmarks_hyrise/logs/${Benchmark_name}/w${numWarehouses}i${numItems}
 
 	# generate dataset
-	if [ -f ../benchmars_hyrise/stock_w${numWarehouses}i${numItems}.tbl ]
+	if [ -f ../benchmarks_hyrise/stock_w${numWarehouses}i${numItems}.tbl ]
 	then
-	    mv ../benchmars_hyrise/stock_w${numWarehouses}i${numItems}.tbl ../benchmars_hyrise/stock.tbl
+	    mv ../benchmarks_hyrise/stock_w${numWarehouses}i${numItems}.tbl ../benchmarks_hyrise/stock.tbl
 	else
 	    ../benchmarks_hyrise/generate_dataset.sh ${numItems} ${numWarehouses}
 	fi
@@ -20,7 +23,7 @@ for numWarehouses in ${Warehouse_numbers[@]}; do
 	# start server
 	../benchmarks_hyrise/run_server.sh &
 	SERVER_ID=$!
-	sleep 1
+	sleep 5
 
 
 	curl -X POST --data-urlencode "query@../benchmarks_hyrise/queries/benchmark/load_table.json" http://localhost:5000/jsonQuery
@@ -33,5 +36,7 @@ for numWarehouses in ${Warehouse_numbers[@]}; do
 	# kill old instance
 	kill -9 ${SERVER_ID}
 	killall hyrise-server_release
-	mv ../benchmars_hyrise/stock.tbl ../benchmars_hyrise/stock_w${numWarehouses}i${numItems}.tbl
+	killall hyrise-server_release
+	sleep 5
+	mv ../benchmarks_hyrise/stock.tbl ../benchmarks_hyrise/stock_w${numWarehouses}i${numItems}.tbl
 done
