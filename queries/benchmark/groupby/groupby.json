@@ -15,12 +15,12 @@
             "type": "GroupByScan",
             "fields": ["S_W_ID"],
 	    "functions": [
-                {"type": 2, /*AVG*/ "field": "S_QUANTITY"}
+                {"type": 0, /*SUM*/ "field": "S_QUANTITY"}
             ]
         },
-	"3": {
-	    "type": "NoOp"
-	}
+        "3": {
+            "type": "NoOp"
+        }
     },
-    "edges" : [["0", "1"], ["0", "2"], ["1", "2"],["2", "3"]]
+    "edges" : [["0", "1"], ["0", "2"], ["1", "2"], ["2", "3"]]
 }
