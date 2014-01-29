@@ -7,10 +7,10 @@
         },
 
         "1": {
-            "type": "SharedHashTableGenerator",
-	    "numCores": 2,
+            "type": "GroupByBuild",
             "fields": ["S_W_ID"],
-	    "key": "groupby"
+	    "instances": 12,
+	    "aggrFunField": 2
         }
     },
     "edges" : [["0", "1"]]

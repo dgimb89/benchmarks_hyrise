@@ -9,7 +9,7 @@
         "1": {
             "type": "GroupByBuild",
             "fields": ["S_W_ID"],
-	    "instances": 4,
+	    "instances": 8,
 	    "aggrFunField": 2
         }
     },
