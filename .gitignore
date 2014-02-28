@@ -1,3 +1,4 @@
 *.tbl
 *.tar
 logs/
+profiles/

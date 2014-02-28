@@ -1,0 +1,22 @@
+{
+    "operators": {
+        "0": {
+            "type": "TableLoad",
+            "table": "stock",
+            "filename": "../../benchmarks_hyrise/stock.tbl"
+        },
+	"1": {
+   		"type": "StartProfiling"
+	},
+        "2": {
+            "type": "HashBuild",
+            "fields": ["S_W_ID", "S_QUANTITY"],
+	    "instances": 4,
+	    "key": "groupby"
+        },
+	"3": {
+	    "type": "StopProfiling"
+	}
+    },
+    "edges" : [["0", "1"], ["1", "2"],["2", "3"]]
+}

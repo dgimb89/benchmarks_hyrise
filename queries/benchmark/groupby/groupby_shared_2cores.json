@@ -6,13 +6,16 @@
             "filename": "../../benchmarks_hyrise/stock.tbl"
         },
         "1": {
-            "type": "HashBuild",
+            "type": "SharedHashTableGenerator",
+	    "numCores": 2,
             "fields": ["S_W_ID"],
 	    "key": "groupby"
         },
         "2": {
             "type": "GroupByScan",
             "fields": ["S_W_ID"],
+	    "instances": 2,
+	    "sharedHT": true,
 	    "functions": [
                 {"type": 0, /*SUM*/ "field": "S_QUANTITY"}
             ]
